@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2014 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <title>Hello World</title>
+         <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" href="css/jquery.mobile-1.4.5.css">
+        <script src="js/jquery-1.11.3.js"></script>
+
+        <script src="js/jquery.mobile-1.4.5.min.js"></script>
+        
+         <script>
+// I've changed to pagebeforecreate as was multiplying results with pagebeforeshow. check if it refreshes list when reopen app
+$(document).on('pagebeforecreate', '#searchpage', function(){
+    var output = $('#listsearch');
+    $.ajax({
+        url: 'http://revolutioninteractivevideo.com/wp-content/uploads/panos/augmentedrealityheritage/www/searchy.php',
+        dataType: 'jsonp',
+        jsonp: 'jsoncallback',
+        timeout: 10000,
+        success: function(data, status){
+            $.each(data, function(i,item){
+                var place = '<li> <a href="' +item.serverlocation+  '" style="text-align:center;"><img class="ui-content" src="' +item.picture+ '">' +item.name+ '<br>' +item.address+ '</a><a href="#download" data-transition="pop" data-icon="gear">Download tour</a>    </li>';
+                output.append(place);
+            });
+            $('#listsearch').listview('refresh');
+        },
+        error: function(){
+            output.text('There was an error loading the data.');
+        }
+    });
+});     
+</script>
+        
+        
+        
+    </head>
+    <body>
+        <div class="app">
+            <h1>PhoneGap</h1>
+            <div id="deviceready" class="blink">
+                <p class="event listening">Connecting to Device</p>
+                <p class="event received">Device is Ready</p>
+            </div>
+        </div>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
+            app.initialize();
+        </script>
+        
+        
+        
+         <div data-role="page" id="pageone" data-theme="b">
+  <div data-role="header">
+       <h1>Welcome To My Homepage</h1>
+    <div data-role="navbar">
+    <ul>
+      <li><a href="#pageone" data-icon="home">Home</a></li>
+      <li><a href="http://www.bbc.co.uk/"   data-icon="info">Information</a></li>
+      <li><a href="#searchpage" data-icon="search">Search</a></li>
+    </ul>
+  </div>
+  </div>
+
+  <div data-role="main" class="ui-content">
+    <p>Welcome!</p>
+    <a href="#pagetwo">Go to Dialog Page</a>
+      
+      
+      
+      
+      <p>Click the button to see if the browser is online.</p>
+
+<button onclick="myFunction()">Try it</button>
+
+<p id="demo"></p>
+
+<script>
+function myFunction() {
+    var x = "Is the browser online? " + navigator.onLine;
+    document.getElementById("demo").innerHTML = x;
+}
+</script>
+      
+      
+      
+      
+      
+      
+    
+  </div>
+
+  <div data-role="footer" data-position="fixed" data-fullscreen="true">
+    <h1>Footer Text</h1>
+  </div>
+</div> 
+    
+    
+    
+
+<div data-role="page" data-dialog="true" id="pageoneinfo" data-theme="b">
+    <div data-role="popup" id="pageoneinfopanel" style="text-align:center; "> 
+    <h2 style="background-color:lightgrey;">AR vs VR</h2>
+    <p>With augmented reality, users hold their phone up in front of them to get information and pictures as they look around; in virtual reality, users wear a headset to see the information in 3D.</p>
+  </div> 
+    <div data-role="header" >
+        <h2>Downloaded tours</h2>
+    </div>
+
+  <div data-role="main" class="ui-content" style="text-align:center; background-color:lightgrey;">
+    <p style="color:black; ">This page shows your downloaded tours. These will work offline - perfect for properties with no mobile signal.<br><br>Most have both an augmented reality (AR) option for adults and a virtual reality (VR) option which is perfect for children.</p>
+    <a href="#pageoneinfopanel" data-rel="popup" class="ui-btn ui-btn-inline ui-mini" style="text-align:center;">What's the difference between AR and VR?</a>
+    
+  </div>
+
+    <a href="#pageone" class="ui-content" style="background-color:#181818   ">
+        <div data-role="footer" style="text-align:center; ">
+            Back
+        </div>
+    </a>
+</div>
+    
+    
+    
+    
+    
+<div data-role="page" id="searchpage" data-theme="b">
+
+ <div data-role="header">
+     
+     
+         <h1>Search all property tours</h1>
+             <div data-role="navbar">
+                  <ul>
+                        <li><a href="#pageone" data-icon="home">Home</a></li>
+                        <li><a href="#searchpageinfo" data-icon="info">Information</a></li>
+                        <li><a href="#searchpage" data-icon="search">Search</a></li>
+                 </ul>
+             </div>
+    </div>
+
+    <div data-role="content">
+        <form class="ui-filterable">
+                <input id="myFilter" placeholder="Search by property name or county" data-type="search">
+        </form>
+
+        <ul data-role="listview"  id="listsearch" data-filter="true" data-input="#myFilter">
+           
+        </ul>
+    </div>
+
+        
+    
+
+    
+</div>
+    
+    
+    
+    
+    
+<div data-role="page" id="searchpageinfo" data-dialog="true" data-theme="b">
+    <div data-role="header">
+        <h2>Search tours</h2>
+        <div data-role="main" class="ui-content" style="text-align:center; background-color:lightgrey;">
+    <p style="color:black; ">Search available tours by property name or county.<br>Tap the gear symbol on the right to download for offline viewing - a better viewing experience and perfect for properties where there's no phone signal. Alternatively you can tap the left hand side to view the tour online.<br><br>The list will be updated as more properties are added.</p>
+        
+        
+        </div>
+    </div>
+    
+    <a href="#searchpage" class="ui-content" style="background-color:#181818   ">
+        
+        
+        <div data-role="footer" style="text-align:center; ">
+            Back
+        </div>
+    </a>
+    
+</div>
+        
+        
+
+<div data-role="page" id="download" data-theme="b">
+    <div data-role="header">
+        <h1>Downloading</h1>
+    </div> 
+    
+    <div data-role="main" class="ui-content" style="text-align:center;">
+        
+        
+
+    </div>
+    
+    </div> 
+        
+        
+    </body>
+</html>
